@@ -11,14 +11,19 @@ Steps:
 - RandomForest (with and without polynomial) + feature importance
 - Hard threshold + 2 regressors idea 
 
-```Criteria:```
-
 * Do it cleanly: cross-validation, nested cross-validation, hyperparameter tuning using good methods (e.g. GridSearch), properly analyze and discuss any intresting pattern or occurance, write functions for repetitive tasks, residual analysis
 
+
+```Criteria:```
+
 * Grading goals:
+
 | 15 | All code runs correctly from start to finish. Notebook is cleanly organized into logical sections. Variable names are clear, repeated logic is factored when appropriate, and results are reproducible (for example via fixed random seeds). |
+
 | 10 | Data loading, inspection, and exploratory analysis are thorough. Relevant statistics and visualizations are included. Important patterns, anomalies, imbalance, skewness, outliers, or correlations are identified and interpreted. |
+
 | 15 | A clear baseline is established. Multiple reasonable models are tested. Model comparison is rigorous, with appropriate validation and metrics. Hyperparameter tuning, residual analysis, error analysis, or confusion-matrix analysis are used where relevant. Choices are justified. |
+
 | 10 | The notebook reads like a clear technical report. Markdown sections, explanations, comments, and conclusions guide the reader through the full workflow. Decisions are motivated, limitations are discussed, and conclusions are tied back to the project question. |
 
 3. Properly compare the models in a nice visualization and conclude about our final choice
@@ -48,4 +53,8 @@ we wanna do EDA, but also nested cross-validation Heatmap, distribution of each 
 * check for outliers if any!
 * polynomial degree debate or another transformation
 * how to combine strength of random forest regressor with polynomial transformation
+
+
+
+Done tasks:
 * don't forget random seed bs!
