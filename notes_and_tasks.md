@@ -18,13 +18,13 @@ Steps:
 
 * Grading goals:
 
-| 15 | All code runs correctly from start to finish. Notebook is cleanly organized into logical sections. Variable names are clear, repeated logic is factored when appropriate, and results are reproducible (for example via fixed random seeds). |
+| 15 | All code runs correctly from start to finish. Notebook is cleanly organized into logical sections. Variable names are clear, repeated logic is factored when appropriate, and results are reproducible (for example via fixed random seeds). 
 
-| 10 | Data loading, inspection, and exploratory analysis are thorough. Relevant statistics and visualizations are included. Important patterns, anomalies, imbalance, skewness, outliers, or correlations are identified and interpreted. |
+| 10 | Data loading, inspection, and exploratory analysis are thorough. Relevant statistics and visualizations are included. Important patterns, anomalies, imbalance, skewness, outliers, or correlations are identified and interpreted. 
 
-| 15 | A clear baseline is established. Multiple reasonable models are tested. Model comparison is rigorous, with appropriate validation and metrics. Hyperparameter tuning, residual analysis, error analysis, or confusion-matrix analysis are used where relevant. Choices are justified. |
+| 15 | A clear baseline is established. Multiple reasonable models are tested. Model comparison is rigorous, with appropriate validation and metrics. Hyperparameter tuning, residual analysis, error analysis, or confusion-matrix analysis are used where relevant. Choices are justified. 
 
-| 10 | The notebook reads like a clear technical report. Markdown sections, explanations, comments, and conclusions guide the reader through the full workflow. Decisions are motivated, limitations are discussed, and conclusions are tied back to the project question. |
+| 10 | The notebook reads like a clear technical report. Markdown sections, explanations, comments, and conclusions guide the reader through the full workflow. Decisions are motivated, limitations are discussed, and conclusions are tied back to the project question. 
 
 3. Properly compare the models in a nice visualization and conclude about our final choice
 
@@ -54,7 +54,20 @@ we wanna do EDA, but also nested cross-validation Heatmap, distribution of each 
 * polynomial degree debate or another transformation
 * how to combine strength of random forest regressor with polynomial transformation
 
-
+feature engineering: mix features with each other
 
 Done tasks:
 * don't forget random seed bs!
+
+
+For first draft:
+- EDA is done
+
+For second review:
+- think more about EDA outliers/skewness/etc
+- check for missing values
+Scaling is required for Ridge regression but not for Random Forest.
+- check for repetitive code --> use functions
+- should we do GridSearch for each
+Only do nested CV at the end (ask Lucas if we should)
+
