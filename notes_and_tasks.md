@@ -70,4 +70,4 @@ Scaling is required for Ridge regression but not for Random Forest.
 - check for repetitive code --> use functions
 - should we do GridSearch for each
 Only do nested CV at the end (ask Lucas if we should)
-
+- should we talk about 'multicollinearity'  between the two description scores, is that really affecting our model

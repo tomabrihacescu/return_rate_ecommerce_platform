@@ -1,0 +1,124 @@
+from sklearn.preprocessing import PolynomialFeatures
+
+results = []
+
+for degree in range(2, 12):
+    poly = PolynomialFeatures(degree=degree, include_bias=False)
+
+    X_train_poly = np.hstack([
+        poly.fit_transform(X_train[['price_eur']]),
+        X_train.drop(columns='price_eur')
+    ])
+
+    X_test_poly = np.hstack([
+        poly.transform(X_test[['price_eur']]),
+        X_test.drop(columns='price_eur')
+    ])
+
+    model = LinearRegression()
+    model.fit(X_train_poly, y_train)
+
+    results.append({
+        "degree": degree,
+        "train_mse": mean_squared_error(y_train, model.predict(X_train_poly)),
+        "test_mse": mean_squared_error(y_test, model.predict(X_test_poly)),
+        "model": model,
+        "x_train_poly": X_train_poly,
+        "x_test_poly": X_test_poly
+    })
+
+print("The top 3 performing degrees for the feature price_eur")
+results_df = pd.DataFrame(results).drop(columns=['model', "x_train_poly", "x_test_poly"]).sort_values("test_mse")
+display(results_df.set_index("degree").head(3))
+
+import matplotlib.pyplot as plt
+
+df = results_df.sort_values("degree").copy()
+df["degree"] = df["degree"].astype(int)
+df["test_mse"] = df["test_mse"].astype(float)
+
+plt.figure(figsize=(8, 5))
+plt.plot(df["degree"].to_numpy(), df["test_mse"].to_numpy(), marker="o")
+
+best = df.loc[df["test_mse"].idxmin()]
+
+plt.scatter(best["degree"], best["test_mse"], color="red", s=100)
+
+plt.xlabel("Polynomial Degree")
+plt.ylabel("Test MSE")
+plt.title("Polynomial Degree vs Test MSE")
+plt.xticks(df["degree"])
+plt.grid(alpha=0.3)
+plt.show()
+
+deg = 2
+X_train_poly, X_test_poly, best_poly_model = results['degree' == deg]['x_train_poly'], results['degree' == deg]['x_test_poly'], results['degree' == deg]['model']
+y_pred_train = best_poly_model.predict(X_train_poly)
+y_pred_test = best_poly_model.predict(X_test_poly)
+
+# Calculate residuals
+residuals_train = y_train - y_pred_train
+residuals_test = y_test - y_pred_test
+# Create comprehensive residual diagnostics
+fig, axs = plt.subplots(2, 2, figsize=(12, 10))
+
+# Plot 1: Residuals vs Fitted (most important!)
+axs[0, 0].scatter(y_pred_train, residuals_train, alpha=0.6, s=60)
+axs[0, 0].axhline(y=0, color='red', linestyle='--', linewidth=2)
+axs[0, 0].set_xlabel('Fitted values (ŷ)', fontsize=11)
+axs[0, 0].set_ylabel('Residuals (y - ŷ)', fontsize=11)
+axs[0, 0].set_title('Residuals vs fitted', fontsize=11, fontweight='bold')
+axs[0, 0].grid(alpha=0.3)
+
+# Plot 2: Histogram
+axs[0, 1].hist(residuals_train, bins=12, alpha=0.7, edgecolor='black', color='orange')
+axs[0, 1].set_xlabel('Residuals', fontsize=11)
+axs[0, 1].set_ylabel('Frequency', fontsize=11)
+axs[0, 1].set_title('Distribution of Residuals', fontsize=11, fontweight='bold')
+axs[0, 1].grid(alpha=0.3, axis='y')
+
+# Plot 3: QQ plot
+axs[1, 0].set_title('QQ Plot', fontsize=11, fontweight='bold')
+fig = sm.qqplot(residuals_train, stats.norm, fit=True, line='q', ax=axs[1, 0])
+
+
+# Plot 4: Residuals over observation index
+axs[1, 1].plot(residuals_train, 'o-', alpha=0.6, linewidth=1, markersize=5)
+axs[1, 1].axhline(y=0, color='red', linestyle='--', linewidth=2)
+axs[1, 1].set_xlabel('Observation Index', fontsize=11)
+axs[1, 1].set_ylabel('Residual', fontsize=11)
+axs[1, 1].set_title('Residuals in Order', fontsize=11, fontweight='bold')
+axs[1, 1].grid(alpha=0.3)
+
+plt.tight_layout()
+plt.show()
+
+print("\nComparison of Training vs Test Residuals:")
+print(f"Training - Mean: {residuals_train.mean():.6f}, Std: {residuals_train.std():.4f}")
+print(f"Test - Mean: {residuals_test.mean():.6f}, Std: {residuals_test.std():.4f}")
+
+
+Variant with log of features (X):
+poly = PolynomialFeatures(degree=4, include_bias=False)
+
+X_train_poly = np.hstack([
+    poly.fit_transform(X_train[['price_eur']]),
+    X_train.drop(columns='price_eur')
+])
+
+X_train_poly_log = np.log(X_train_poly)
+
+X_test_poly = np.hstack([
+    poly.transform(X_test[['price_eur']]),
+    X_test.drop(columns='price_eur')
+])
+
+X_test_poly_log = np.log(X_test_poly)
+
+
+model = LinearRegression()
+model.fit(X_train_poly, y_train)
+
+y_pred_test = model.predict(X_test_poly_log)
+y_pred_train = model.predict(X_train_poly_log)
+
