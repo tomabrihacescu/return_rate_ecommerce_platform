@@ -27,7 +27,7 @@ class BimodalPolyRfRegressor(BaseEstimator, RegressorMixin): #BaseEstimator & Re
             'poly__degree': list(range(0, 6))
         }
 
-        model_rf = RandomForestRegressor(random_state=self.random_state)
+        model_rf = RandomForestRegressor(random_state=self.randomx_state)
         rf_params = {
             "n_estimators": [50, 100], 
             "max_depth": [None, 5, 10]
