@@ -98,23 +98,6 @@ An overall **MSE ≈ 25** corresponds to a **Root Mean Squared Error (RMSE) of ~
 
 > **Example:** If the model forecasts an **80%** return rate for an upcoming campaign, the true return rate will realistically land between **75% and 85%** — providing an actionable ±5% confidence band to revise or halt risky campaigns before budget is committed.
 
----
-
-## Getting Started
-
-```bash
-# Clone the repository
-git clone [https://github.com/yac2307/](https://github.com/yac2307/)<repo-name>.git
-cd <repo-name>
-
-# Install dependencies
-pip install -r requirements.txt
-
-# Launch the analysis notebook
-jupyter notebook
-```
-
----
 
 ## Authors
 
